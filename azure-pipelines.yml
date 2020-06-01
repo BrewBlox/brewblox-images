@@ -52,4 +52,13 @@ steps:
     --platform linux/amd64,linux/arm/v7
     rabbitmq
   displayName: Deploy RabbitMQ image with branch tag
-  condition: and(succeeded(), variables['BRANCH'], not(variables['RELEASE']))
+  condition: and(succeeded(), variables['BRANCH'])
+
+- bash: >-
+    docker buildx build
+    --tag brewblox/omgwtfssl:$(TAG)
+    --push
+    --platform linux/amd64,linux/arm/v7
+    omgwtfssl
+  displayName: Deploy OMGWTFSSL image with branch tag
+  condition: and(succeeded(), variables['BRANCH'])
