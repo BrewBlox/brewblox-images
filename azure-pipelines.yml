@@ -51,7 +51,7 @@ steps:
     --push
     --platform linux/amd64,linux/arm/v7
     rabbitmq
-  displayName: Deploy RabbitMQ image with branch tag
+  displayName: Build RabbitMQ image
   condition: and(succeeded(), variables['BRANCH'])
 
 - bash: >-
@@ -60,5 +60,14 @@ steps:
     --push
     --platform linux/amd64,linux/arm/v7
     omgwtfssl
-  displayName: Deploy OMGWTFSSL image with branch tag
+  displayName: Build OMGWTFSSL image
+  condition: and(succeeded(), variables['BRANCH'])
+
+- bash: >-
+    docker buildx build
+    --tag brewblox/mosquitto:$(TAG)
+    --push
+    --platform linux/amd64,linux/arm/v7
+    mosquitto
+  displayName: Build Mosquitto image
   condition: and(succeeded(), variables['BRANCH'])
