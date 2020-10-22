@@ -2,7 +2,10 @@ FROM alpine
 WORKDIR /certs
 VOLUME /certs
 
-COPY ./app /app
 RUN apk --update add bash openssl
 
-CMD /app/brewblox-certs
+COPY generate-certs /usr/local/bin/generate-certs
+COPY brewblox-certs /usr/local/bin/brewblox-certs
+COPY brewblox-certs.cnf /usr/local/etc/brewblox-certs.cnf
+
+CMD /usr/local/bin/brewblox-certs
