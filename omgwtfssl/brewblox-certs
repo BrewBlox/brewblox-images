@@ -6,6 +6,8 @@ openssl req \
     -nodes \
     -days 365 \
     -newkey rsa:2048 \
-    -subj "/C=NL/ST=./L=./O=Brewblox/OU=./CN=."  \
+    -sha256 \
+    -config /usr/local/etc/brewblox-certs.cnf \
+    -extensions req_ext \
     -keyout brewblox.key \
     -out brewblox.crt
