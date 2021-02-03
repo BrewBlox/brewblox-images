@@ -40,18 +40,9 @@ steps:
 
 - bash: >-
     docker buildx build
-    --tag brewblox/rabbitmq:$(TAG)
-    --push
-    --platform linux/amd64,linux/arm/v7
-    rabbitmq
-  displayName: Build RabbitMQ image
-  condition: and(succeeded(), variables['BRANCH'])
-
-- bash: >-
-    docker buildx build
     --tag brewblox/omgwtfssl:$(TAG)
     --push
-    --platform linux/amd64,linux/arm/v7
+    --platform linux/amd64,linux/arm/v7,linux/arm64/v8
     omgwtfssl
   displayName: Build OMGWTFSSL image
   condition: and(succeeded(), variables['BRANCH'])
@@ -60,7 +51,7 @@ steps:
     docker buildx build
     --tag brewblox/mosquitto:$(TAG)
     --push
-    --platform linux/amd64,linux/arm/v7
+    --platform linux/amd64,linux/arm/v7,linux/arm64/v8
     mosquitto
   displayName: Build Mosquitto image
   condition: and(succeeded(), variables['BRANCH'])
