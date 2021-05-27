@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  agent:
+    image: dockeragent:local
+    restart: unless-stopped
+    environment:
+      - AZP_URL
+      - AZP_TOKEN
+      - AZP_AGENT_NAME
+    command: --once
