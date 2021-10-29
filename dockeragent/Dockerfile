@@ -1,4 +1,4 @@
-FROM brewblox/simulator-compiler:10.3
+FROM brewblox/simulator-compiler:9
 HEALTHCHECK --interval=1m --timeout=2s CMD ps aux | grep --color=never [A]gent.Listener
 
 ENV DEBIAN_FRONTEND=noninteractive
