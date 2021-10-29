@@ -38,20 +38,10 @@ steps:
   displayName: Docker login
   condition: and(succeeded(), variables.BRANCH)
 
-- bash: >-
-    docker buildx build
-    --tag brewblox/omgwtfssl:$(TAG)
-    --push
-    --platform linux/amd64,linux/arm/v7,linux/arm64/v8
-    omgwtfssl
+- bash: omgwtfssl/build.sh $(TAG)
   displayName: Build OMGWTFSSL image
   condition: and(succeeded(), variables['BRANCH'])
 
-- bash: >-
-    docker buildx build
-    --tag brewblox/mosquitto:$(TAG)
-    --push
-    --platform linux/amd64,linux/arm/v7,linux/arm64/v8
-    mosquitto
+- bash: mosquitto/build.sh $(TAG)
   displayName: Build Mosquitto image
   condition: and(succeeded(), variables['BRANCH'])
