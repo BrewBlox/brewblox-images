@@ -13,7 +13,7 @@ if [ -z "$AZP_TOKEN_FILE" ]; then
   fi
 
   AZP_TOKEN_FILE=/azp/.token
-  echo -n "$AZP_TOKEN" > "$AZP_TOKEN_FILE"
+  echo -n "$AZP_TOKEN" >"$AZP_TOKEN_FILE"
 fi
 
 unset AZP_TOKEN
@@ -60,7 +60,10 @@ print_header "1. Configuring Azure Pipelines agent..."
   --pool "${AZP_POOL:-Default}" \
   --work "${AZP_WORK:-_work}" \
   --replace \
-  --acceptTeeEula & wait $!
+  --acceptTeeEula \
+  &
+
+wait $!
 
 print_header "2. Running Azure Pipelines agent..."
 

@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 set -euo pipefail
-pushd "$(dirname "$0")" > /dev/null
+pushd "$(dirname "$0")" >/dev/null
 
 bash ../prepare_buildx.sh
 

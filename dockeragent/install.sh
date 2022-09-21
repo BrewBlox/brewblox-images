@@ -2,21 +2,19 @@
 
 set -ex
 
-if [[ $(arch) == "aarch64" ]]
-then
+if [[ $(arch) == "aarch64" ]]; then
     TARGETARCH="arm64"
-elif [[ $(arch) == "armv7l" ]]
-then
+elif [[ $(arch) == "armv7l" ]]; then
     TARGETARCH="arm"
 else
     echo "Unsupported arch: $(arch)"
     exit 1
 fi
 
-AGENT_VERSION="2.194.0"
+AGENT_VERSION="2.204.0"
 AZP_AGENTPACKAGE_URL="https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/vsts-agent-linux-${TARGETARCH}-${AGENT_VERSION}.tar.gz"
 
-echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
+echo "APT::Get::Assume-Yes \"true\";" >/etc/apt/apt.conf.d/90assumeyes
 
 apt-get update -q
 apt-get install -q --no-install-recommends \
@@ -33,7 +31,7 @@ apt-get install -q --no-install-recommends \
     libssl1.0 \
     build-essential
 
-echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+echo '%sudo ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
 
 curl -sSL https://aka.ms/InstallAzureCLIDeb | bash
 curl -LsS "${AZP_AGENTPACKAGE_URL}" | tar -xz
