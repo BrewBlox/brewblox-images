@@ -24,21 +24,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: (omgwtfssl) Get image metadata
-        id: meta_omgwtfssl
-        uses: docker/metadata-action@v4
-        with:
-          images: ghcr.io/brewblox/omgwtfssl
-
-      - name: (omgwtfssl) Build Docker image
-        uses: docker/build-push-action@v4
-        with:
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta_omgwtfssl.outputs.tags }}
-          labels: ${{ steps.meta_omgwtfssl.outputs.labels }}
-          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
-          context: docker
-
       - name: (mosquitto) Get image metadata
         id: meta_mosquitto
         uses: docker/metadata-action@v4
@@ -52,4 +37,19 @@ jobs:
           tags: ${{ steps.meta_mosquitto.outputs.tags }}
           labels: ${{ steps.meta_mosquitto.outputs.labels }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
-          context: docker
+          context: mosquitto
+
+      - name: (omgwtfssl) Get image metadata
+        id: meta_omgwtfssl
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/brewblox/omgwtfssl
+
+      - name: (omgwtfssl) Build Docker image
+        uses: docker/build-push-action@v4
+        with:
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta_omgwtfssl.outputs.tags }}
+          labels: ${{ steps.meta_omgwtfssl.outputs.labels }}
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
+          context: omgwtfssl
