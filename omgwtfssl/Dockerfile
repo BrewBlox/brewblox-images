@@ -1,5 +1,4 @@
 FROM alpine
-LABEL org.opencontainers.image.source="https://github.com/BrewBlox/brewblox-images"
 WORKDIR /certs
 VOLUME /certs
 
