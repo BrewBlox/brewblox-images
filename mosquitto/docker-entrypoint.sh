@@ -8,7 +8,7 @@ touch /mosquitto/include/externals.passwd
 # Set permissions
 user="$(id -u)"
 if [ "$user" = '0' ]; then
-    chown -R mosquitto:mosquitto /mosquitto || true
+    chown -R mosquitto:mosquitto /mosquitto/include/* || true
 fi
 
 exec "$@"
