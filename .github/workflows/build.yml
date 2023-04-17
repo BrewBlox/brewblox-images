@@ -1,0 +1,55 @@
+name: CI build
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [develop, edge]
+
+jobs:
+  build:
+    if: github.repository_owner == 'BrewBlox'
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/setup-qemu-action@v2
+      - uses: docker/setup-buildx-action@v2
+
+      - name: ghcr.io login
+        uses: docker/login-action@v2
+        if: github.event_name != 'pull_request'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: (mosquitto) Get image metadata
+        id: meta_mosquitto
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/brewblox/mosquitto
+
+      - name: (mosquitto) Build Docker image
+        uses: docker/build-push-action@v4
+        with:
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta_mosquitto.outputs.tags }}
+          labels: ${{ steps.meta_mosquitto.outputs.labels }}
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
+          context: mosquitto
+
+      - name: (omgwtfssl) Get image metadata
+        id: meta_omgwtfssl
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/brewblox/omgwtfssl
+
+      - name: (omgwtfssl) Build Docker image
+        uses: docker/build-push-action@v4
+        with:
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta_omgwtfssl.outputs.tags }}
+          labels: ${{ steps.meta_omgwtfssl.outputs.labels }}
+          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
+          context: omgwtfssl
