@@ -5,7 +5,7 @@ pushd "$(dirname "$0")" >/dev/null
 TAG=${1:?}
 
 docker buildx build \
-    --tag ghcr.io/brewblox/omgwtfssl:"${TAG}" \
+    --tag ghcr.io/brewblox/minica:"${TAG}" \
     --push \
     --platform linux/amd64,linux/arm/v7,linux/arm64/v8 \
     .
