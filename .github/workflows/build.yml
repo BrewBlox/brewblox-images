@@ -5,6 +5,7 @@ on:
     branches: ["**"]
   pull_request:
     branches: [develop, edge]
+  workflow_dispatch: {}
 
 jobs:
   build:
@@ -39,17 +40,17 @@ jobs:
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
           context: mosquitto
 
-      - name: (omgwtfssl) Get image metadata
-        id: meta_omgwtfssl
+      - name: (minica) Get image metadata
+        id: meta_minica
         uses: docker/metadata-action@v4
         with:
-          images: ghcr.io/brewblox/omgwtfssl
+          images: ghcr.io/brewblox/minica
 
-      - name: (omgwtfssl) Build Docker image
+      - name: (minica) Build Docker image
         uses: docker/build-push-action@v4
         with:
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta_omgwtfssl.outputs.tags }}
-          labels: ${{ steps.meta_omgwtfssl.outputs.labels }}
+          tags: ${{ steps.meta_minica.outputs.tags }}
+          labels: ${{ steps.meta_minica.outputs.labels }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
-          context: omgwtfssl
+          context: minica
